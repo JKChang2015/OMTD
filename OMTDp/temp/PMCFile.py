@@ -4,12 +4,8 @@
 # Tag:
 # Description: class of PubMed file
 
-class PubCFile():
-    PMID = ''
-    ID = ''
-    title = ''
-    abstract = ''
-    author = ''
+class PMCFile():
+    pass
 
 
 
