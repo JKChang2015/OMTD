@@ -6,7 +6,6 @@
 package omtd;
 
 /**
- *
  * @author JKChang
  */
 public class OMTD {
@@ -17,5 +16,5 @@ public class OMTD {
     public static void main(String[] args) {
         // TODO code application logic here
     }
-    
+
 }
