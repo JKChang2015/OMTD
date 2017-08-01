@@ -4,6 +4,10 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="CJK" />
+    <orderEntry type="module" module-name="Python" />
+    <orderEntry type="module" module-name="Python" />
+    <orderEntry type="module" module-name="DataAnalysis" />
   </component>
   <component name="TestRunnerService">
     <option name="PROJECT_TEST_RUNNER" value="Unittests" />

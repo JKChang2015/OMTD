@@ -4,8 +4,7 @@
 # Tag:
 # Description: extract PMC XML attributes
 
-import urllib2
-
+import urllib.request, urllib.error, urllib.parse
 from lxml import etree
 
 import PMCattribute
@@ -16,13 +15,13 @@ class PMCExtractor(object):
 
     def extractCore(self, PMID):
         url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%d&resulttype=core' % PMID
-        core = Core(urllib2.urlopen(url).read())
-        print core
+        core = Core(urllib.request.urlopen(url).read())
+        print(core)
         return core
 
     def prettyCore(self):
         root = etree.fromstring(self.core)
-        print etree.tostring(root, pretty_print=True)
+        print(etree.tostring(root, pretty_print=True))
         # return etree.tostring(root, pretty_print=True)
 
     def extractAbstract(self, PMID):

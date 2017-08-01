@@ -4,7 +4,7 @@
 # Tag:
 # Description: PMC core file
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from lxml import etree
 from PMCattribute import PMC_Attribute
 
@@ -16,35 +16,35 @@ class PMCCore(str):
     def prettyPrint(self):
         def prettyCore(self):
             root = etree.fromstring(self)
-            print etree.tostring(root, pretty_print=True)
+            print(etree.tostring(root, pretty_print=True))
 
     def getID(self):
-        return self.__extractAttri__(PMC_Attribute.ID)
+        return self.__extractAttri(PMC_Attribute.ID)
 
     def getSource(self):
-        return  self.__extractAttri__(PMC_Attribute.SOURCE)
+        return  self.__extractAttri(PMC_Attribute.SOURCE)
 
     def getPMID(self):
-        return  self.__extractAttri__(PMC_Attribute.PMID)
+        return  self.__extractAttri(PMC_Attribute.PMID)
 
     def getPMCID(self):
-        return  self.__extractAttri__(PMC_Attribute.PMCID)
+        return  self.__extractAttri(PMC_Attribute.PMCID)
 
     def getDOI(self):
-        return  self.__extractAttri__(PMC_Attribute.DOI)
+        return  self.__extractAttri(PMC_Attribute.DOI)
 
     def getTitle(self):
-        return  self.__extractAttri__(PMC_Attribute.TITLE)
+        return  self.__extractAttri(PMC_Attribute.TITLE)
 
     def getAbstract(self):
-        return self.__extractAttri__(PMC_Attribute.ABSTRACT)
+        return self.__extractAttri(PMC_Attribute.ABSTRACT)
 
 
 
-    def __extractAttri__(self, attri):
+    def __extractAttri(self, attri):
         if not isinstance(attri, PMC_Attribute):
             raise TypeError('The core does not include attribute called ' + attri)
-        print attri.value
+        print(attri.value)
 
     def printContent(self):
         pass

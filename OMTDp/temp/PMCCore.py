@@ -4,7 +4,7 @@
 # Tag:
 # Description: core
 
-import urllib2
+import urllib.request, urllib.error, urllib.parse
 from lxml import etree
 
 
@@ -14,4 +14,4 @@ class Core(str):
 
     def prettyCore(self):
         root = etree.fromstring(self)
-        print etree.tostring(root, pretty_print=True)
+        print(etree.tostring(root, pretty_print=True))

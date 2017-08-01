@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../../Python/CJK/.idea/CJK.iml" filepath="$PROJECT_DIR$/../../Python/CJK/.idea/CJK.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Python/DataAnalysis/.idea/DataAnalysis.iml" filepath="$PROJECT_DIR$/../../Python/DataAnalysis/.idea/DataAnalysis.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/OMTDp.iml" filepath="$PROJECT_DIR$/.idea/OMTDp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../Python/.idea/Python.iml" filepath="$PROJECT_DIR$/../../Python/.idea/Python.iml" />
     </modules>
   </component>
 </project>

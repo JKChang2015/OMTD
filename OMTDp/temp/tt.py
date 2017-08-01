@@ -4,7 +4,7 @@
 # Tag:
 # Description: function test
 
-from temp.PMCExtractor import PMCExtractor
+from .PMCExtractor import PMCExtractor
 
 id = 9843981
 ext = PMCExtractor()
