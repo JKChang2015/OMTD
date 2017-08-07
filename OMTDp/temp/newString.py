@@ -6,7 +6,8 @@
 
 class newString(str):
     def __new__(cls, value):
-        obj = str.__new__(cls,value)
+        obj = str.__new__(cls, value)
         return obj
+
 
 a = newString('abic')

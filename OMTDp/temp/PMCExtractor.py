@@ -8,7 +8,7 @@ import urllib.request, urllib.error, urllib.parse
 from lxml import etree
 
 import PMCattribute
-from PMCCore import Core
+from Extractor import Core
 
 
 class PMCExtractor(object):

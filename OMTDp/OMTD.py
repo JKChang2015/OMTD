@@ -5,32 +5,37 @@
 # Description: API basic function
 
 import urllib.request, urllib.error, urllib.parse
-from lxml import etree
 
-from lxml.html.soupparser import fromstring
-from lxml.etree import tostring
-from xml.dom.minidom import parseString
 
 class searcher():
     xml = ''
-    result = []
+    IDResult = []
+    count = 0
 
     def searching(self, keyword):
-        url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s' % keyword
+        url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&resulttype=idlist' % keyword
         print(url)
         self.xml = urllib.request.urlopen(url).read()
         return self.xml
 
-    def getSearchResult(self):
+    def getIDList(self):
+        return self.IDResult
 
-        return self.result
+    def getCount(self):
+        return self.cout
 
-def XMLPretty(string):
-        root = etree.fromstring(string)
-        return etree.tostring(root, pretty_print=True)
+    def __extract(self):
+        pass
 
 
-k = 'paracetamol'
-s = searcher()
-xml = s.searching(k)
-print(XMLPretty(xml))
+
+
+
+# def XMLPretty(string):
+#         root = etree.fromstring(string)
+#         return etree.tostring(root, pretty_print=True)
+#
+# k = 'paracetamol'
+# s = searcher()
+# xml = s.searching(k)
+# print(XMLPretty(xml).decode('utf8'))

@@ -17,9 +17,11 @@ id = 9843981
 url = r'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%d&resulttype=core' % id
 print(url)
 
-xml_str = urllib.request.urlopen(url).read().decode("utf8")
+xml_str = urllib.request.urlopen(url).read()
+print(xml_str)
 root = etree.fromstring(xml_str)
-print(etree.tostring(root, pretty_print=True))
+print (type(root))
+print(etree.tostring(root, pretty_print=True).decode('utf-8'))
 
 # xml_str = urllib.request.urlopen(url).read()
 #
