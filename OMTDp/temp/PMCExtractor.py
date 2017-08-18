@@ -4,18 +4,19 @@
 # Tag:
 # Description: extract PMC XML attributes
 
-import urllib.request, urllib.error, urllib.parse
+import urllib.error
+import urllib.parse
+import urllib.request
+
 from lxml import etree
 
 import PMCattribute
-from Extractor import Core
 
 
 class PMCExtractor(object):
-
     def extractCore(self, PMID):
         url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%d&resulttype=core' % PMID
-        core = Core(urllib.request.urlopen(url).read())
+        core = urllib.request.urlopen(url).read()
         print(core)
         return core
 

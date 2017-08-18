@@ -6,7 +6,7 @@
 
 import urllib.request, urllib.error, urllib.parse
 import xml.dom.minidom
-import urllib.request, urllib.parse, urllib.error
+
 from lxml import etree
 
 PMID = 9843981
@@ -22,4 +22,10 @@ root = etree.fromstring(getCore(PMID))
 print(etree.tostring(root, pretty_print=True))
 
 
-
+import sys, locale, os
+print(sys.stdout.encoding)
+print(sys.stdout.isatty())
+print(locale.getpreferredencoding())
+print(sys.getfilesystemencoding())
+print(os.environ["PYTHONIOENCODING"])
+print(chr(246), chr(9786), chr(9787))
