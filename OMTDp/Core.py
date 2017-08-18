@@ -16,11 +16,12 @@ from xml.dom import minidom
 
 
 class Core(object):
-    resDict = {}
+
 
     def __init__(self, PMID):
         url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%s&resulttype=core' % PMID
         self.core_str = urllib.request.urlopen(url).read().decode('utf-8')
+        self.resDict ={}
         # print(_prettify(self.core_str))
 
     def getAttribute(self, *attri, ALL=False):  # get results in dict for *attri
@@ -76,6 +77,3 @@ def _prettify(elem):
     reparsed = minidom.parseString(elem)
     return reparsed.toprettyxml(indent="\t")
 
-
-c = Core('28644687')
-print(c)

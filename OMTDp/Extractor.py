@@ -10,41 +10,16 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
-from PMCattribute import PMC_Attrib
+# from PMCattribute import PMC_Attrib
+from Core import Core
 
 
 class XMLExtractor(str):
     PMIDs = []
 
-    # def __new__(cls, value):
-    #     return str.__new__(cls, value)
-
-    # def getSource(self):
-    #     return self.__extractAttri(PMC_Attrib.SOURCE)
-    #
-    # def getPMID(self):
-    #     return self.__extractAttri(PMC_Attrib.PMID)
-    #
-    # def getPMCID(self):
-    #     return self.__extractAttri(PMC_Attrib.PMCID)
-    #
-    # def getDOI(self):
-    #     return self.__extractAttri(PMC_Attrib.DOI)
-    #
-    # def getTitle(self):
-    #     return self.__extractAttri(PMC_Attrib.TITLE)
-    #
-    # def getAbstract(self):
-    #     return self.__extractAttri(PMC_Attrib.ABSTRACT)
-    #
-    # def getAuthor(self):
-    #     return self.__extractAttri(PMC_Attrib.AUTHOR)
-
-
-
     def search(self, keyword):
         "return list of PMID "
-        pageSize = 100
+        pageSize = 25
         resulttype = 'idlist'
         url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=%s&resulttype=%s&pageSize=%s' % (
             keyword, resulttype, pageSize)
@@ -63,27 +38,13 @@ class XMLExtractor(str):
         return core_str
 
 
-def extractAttri(attri):
-    if isinstance('PMC_Attrib.' + attri, PMC_Attrib):
-        print('it\'s super OK')
-
-    # if attri in PMC_Attrib.__members__.keys():
-    #     if attri == PMC_Attrib.SOURCE.name:
-    #         return PMC_Attrib.SOURCE.value
-    #     elif attri == PMC_Attrib.PMID.name:
-    #         pass
-    #     elif attri == PMC_Attrib.PMID.name:
-    #         pass
-    #     elif attri == PMC_Attrib.PMID.name:
-    #         pass
-    #     elif attri == PMC_Attrib.PMID.name:
-    #         pass
-    #     elif attri == PMC_Attrib.PMID.name:
-    #         pass
-    #     elif attri == PMC_Attrib.PMID.name:
-    #         pass
-    else:
-        raise TypeError('attribute must be an instance of PMC_Attrib')
+# def extractAttri(attri):
+#     if isinstance('PMC_Attrib.' + attri, PMC_Attrib):
+#         print('it\'s super OK')
+#
+#
+#     else:
+#         raise TypeError('attribute must be an instance of PMC_Attrib')
 
 
 def extract(xml_str, tag):
@@ -111,8 +72,14 @@ def prettify(elem):
 
 
 ext = XMLExtractor()
+ext.search('paracetamol')
+for id in ext.PMIDs:
+    core = Core(id)
+    # core.getAttribute(ALL=True)
+    print(core)
+    print('--' * 50)
 
-# ext.search('paracetamol')
+
 # idd = '28644687'
 # ext.getCore(idd)
 
