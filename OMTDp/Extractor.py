@@ -10,12 +10,12 @@ import urllib.request
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
-# from PMCattribute import PMC_Attrib
 from Core import Core
 
 
-class XMLExtractor(str):
-    PMIDs = []
+class XMLExtractor():
+    def __init__(self):
+        self.PMIDs = []
 
     def search(self, keyword):
         "return list of PMID "
@@ -28,26 +28,11 @@ class XMLExtractor(str):
         xml_str = urllib.request.urlopen(url).read().decode('utf-8')
         # print(prettify(xml_str))
 
-        self.PMIDs = extract(xml_str, 'pmid')
+        self.PMIDs = _extract(xml_str, 'pmid')
         print(self.PMIDs)
 
-    def getCore(self, PMID):
-        url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%s&resulttype=core' % PMID
-        core_str = urllib.request.urlopen(url).read().decode('utf-8')
-        print(prettify(core_str))
-        return core_str
 
-
-# def extractAttri(attri):
-#     if isinstance('PMC_Attrib.' + attri, PMC_Attrib):
-#         print('it\'s super OK')
-#
-#
-#     else:
-#         raise TypeError('attribute must be an instance of PMC_Attrib')
-
-
-def extract(xml_str, tag):
+def _extract(xml_str, tag):
     # if not isinstance(tag, PMC_Attrib):
     # raise TypeError('The xml file does not include tag called ' + tag)
     try:
@@ -60,7 +45,7 @@ def extract(xml_str, tag):
         raise TypeError('The xml file does not include tag called ' + tag)
 
 
-def prettify(elem):
+def _prettify(elem):
     """Return a pretty-printed XML string for the Element.
     """
     # rough_string = ET.tostring(elem, 'utf-8')
@@ -75,14 +60,5 @@ ext = XMLExtractor()
 ext.search('paracetamol')
 for id in ext.PMIDs:
     core = Core(id)
-    # core.getAttribute(ALL=True)
     print(core)
     print('--' * 50)
-
-
-# idd = '28644687'
-# ext.getCore(idd)
-
-
-
-# extractAttri('HI')

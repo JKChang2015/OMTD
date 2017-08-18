@@ -20,6 +20,7 @@ class Core(object):
 
     def __init__(self, PMID):
         url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%s&resulttype=core' % PMID
+        # print(url)
         self.core_str = urllib.request.urlopen(url).read().decode('utf-8')
         self.resDict ={}
         # print(_prettify(self.core_str))
@@ -42,6 +43,8 @@ class Core(object):
     def __str__(self):
         if len(self.resDict) == 0:
             self.getAttribute(ALL=True)
+
+        # remove empty elements attri
 
         # printList = ['title', 'doi', 'pmid', 'pmcid', 'source', 'authorString', 'abstractText']
         p = _getValues('title', self.resDict) + ' (https://www.ncbi.nlm.nih.gov/pubmed/?term=%s) \n' % _getValues(
