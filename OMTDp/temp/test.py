@@ -4,33 +4,58 @@
 # Tag:
 # Description:
 
-from urllib import request
-from xml.dom import minidom
+import urllib.request
 import xml.etree.ElementTree as ET
-from bs4 import BeautifulSoup
-import lxml.etree as etree
+from xml.dom import minidom
 
 
 def prettify(elem):
     """Return a pretty-printed XML string for the Element.
     """
-    rough_string = ET.tostring(elem, 'utf-8')
-    reparsed = minidom.parseString(rough_string)
+    # rough_string = ET.tostring(elem, 'utf-8')
+    reparsed = minidom.parseString(elem)
     return reparsed.toprettyxml(indent="\t")
 
 
-id = 9843981
-url = r'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%d&resulttype=core' % id
-print(url)
+def extractAttri(root, tag):
+    try:
+        res = []
+        for ele in root.findall(tag):
+            res.append(ele.text)
+        return res
+    except:
+        raise TypeError('Fail to find attribute %s' % tag)
 
-xml_str = request.urlopen(url).read().decode('utf8')
+
+url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=paracetamol&resulttype=core&pageSize=3'
+xml_str = urllib.request.urlopen(url).read().decode('utf-8')
+# print(prettify(xml_str))
+
 root = ET.fromstring(xml_str)
-# print(prettify(root))  # pretty print
-# print(root.tag) #print out the root
 
-# ==================Child level=======================
-for child in root:
-    print (child.tag)
+count = 0
+for result in root.iter('result'):
+    abstract = extractAttri(result, 'abstractText')
+    print(abstract)
+
+
+
+
+
+#
+#
+# id = 9843981
+# url = r'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:%d&resulttype=core' % id
+# print(url)
+#
+# xml_str = request.urlopen(url).read().decode('utf8')
+# root = ET.fromstring(xml_str)
+# # print(prettify(root))  # pretty print
+# # print(root.tag) #print out the root
+#
+# # ==================Child level=======================
+# for child in root:
+#     print (child.tag)
 
 
 

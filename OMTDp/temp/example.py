@@ -5,7 +5,7 @@
 # Description: 
 
 import xml.etree.ElementTree as ET
-from Extractor import XMLExtractor
+from Extractor import PMIDExtractor
 from lxml import etree
 
 stri = """

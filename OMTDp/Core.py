@@ -64,10 +64,10 @@ def _getValues(attributeResult, dict):
     return values
 
 
-def _attriExtract(content, attri):
+def _attriExtract(content_str, attri):
     try:
         res = []
-        root = ET.fromstring(content)
+        root = ET.fromstring(content_str)
         for results in root.iter('result'):
             for ele in results.findall(attri):
                 res.append(ele.text)
