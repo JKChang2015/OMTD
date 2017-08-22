@@ -4,39 +4,79 @@
 # Tag:
 # Description:
 
-import urllib.request
-import xml.etree.ElementTree as ET
-from xml.dom import minidom
 
 
-def prettify(elem):
-    """Return a pretty-printed XML string for the Element.
-    """
-    # rough_string = ET.tostring(elem, 'utf-8')
-    reparsed = minidom.parseString(elem)
-    return reparsed.toprettyxml(indent="\t")
+l1 = [23]
+if len(l1) ==1:
+    print(l1[0])
+else:
+    print(l1)
+# import urllib.request
+# import xml.etree.ElementTree as ET
+#
+#
+# def extractAttri(root, tag):  # get single attribute (tag)
+#     try:
+#         res = []
+#         for ele in root.findall(tag):
+#             res.append(ele.text)
+#         return res
+#     except:
+#         raise TypeError('Fail to find attribute %s' % tag)
+#
+#
+# def getResult(root, *attri, ALL=False):  # get certain attribute from <result> ... </result>
+#     resDict = {}
+#     if ALL:
+#         att = ('source', 'pmid', 'pmcid', 'doi', 'title', 'authorString', 'abstractText')
+#     else:
+#         att = attri
+#
+#     for ele in att:
+#         if len(extractAttri(root, ele)) != 0:
+#             resDict[ele] = extractAttri(root, ele)
+#     return resDict
+#
+#
+# def _getValues(attributeResult, dict):
+#     values = 'None'
+#     if dict.__contains__(attributeResult):
+#         values = '\n'.join(dict[attributeResult])
+#
+#     return values
+#
+#
+# def printit(resDict):
+#     p = _getValues('title', resDict) + ' (https://www.ncbi.nlm.nih.gov/pubmed/?term=%s) \n' % _getValues(
+#         'pmid', resDict)
+#     p += 'Author: %s \n' % _getValues('authorString', resDict)
+#     p += 'DOI: %s \n' % _getValues('doi', resDict)
+#     p += 'Source: %s \n' % _getValues('source', resDict)
+#     p += 'PMID: %s \n' % _getValues('pmid', resDict)
+#     if resDict.__contains__('pmcid') and len(resDict['pmcid']) != 0:
+#         p += 'PMCID: %s \n' % _getValues('pmcid', resDict)
+#     p += 'Abstract: %s \n' % _getValues('abstractText', resDict)
+#     return p
+#
+#
+# url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=paracetamol&resulttype=core&pageSize=100'
+# xml_str = urllib.request.urlopen(url).read().decode('utf-8')
+# # print(prettify(xml_str))
+#
+# root = ET.fromstring(xml_str)
+# print(type(root))
+#
+# count = 0
+#
+# # res = []
+# for result in root.iter('result'):
+#     print('-' * 130)
+#     print(printit(getResult(result, ALL=True)))
+#     print('-' * 130)
 
 
-def extractAttri(root, tag):
-    try:
-        res = []
-        for ele in root.findall(tag):
-            res.append(ele.text)
-        return res
-    except:
-        raise TypeError('Fail to find attribute %s' % tag)
-
-
-url = 'http://www.ebi.ac.uk/europepmc/webservices/rest/search?query=paracetamol&resulttype=core&pageSize=3'
-xml_str = urllib.request.urlopen(url).read().decode('utf-8')
-# print(prettify(xml_str))
-
-root = ET.fromstring(xml_str)
-
-count = 0
-for result in root.iter('result'):
-    abstract = extractAttri(result, 'abstractText')
-    print(abstract)
+# abstract = extractAttri(result, 'source')
+# print(abstract)
 
 
 

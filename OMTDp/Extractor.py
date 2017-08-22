@@ -47,71 +47,85 @@ class CoreExtractor():
         print(url)
 
         xml_str = urllib.request.urlopen(url).read().decode('utf-8')
-        self.coreList = _extractInResults(xml_str)
+        root = ET.fromstring(xml_str)
 
-        print(self.coreList)
+        for result in root.iter('result'):
+            core = _getResult(result, ALL=True)
+            self.coreList.append(core)
+
         return self.coreList
 
 
-def _extractAttri(root, tag):
-    '''extract specified attribute according to the tag'''
+def _extractAttri(root, tag):  # get single attribute (tag)
     try:
-        res = []
-        for ele in root.iter(tag):
-            res.append(ele.text)
-        return res
+        attrib = []
+        for ele in root.findall(tag):
+            attrib.append(ele.text)
+        return attrib
     except:
-        raise TypeError('The xml file does not include tag called ' + tag)
+        raise TypeError('Fail to find attribute %s' % tag)
 
 
-def _extractInResults(xml_str):
-    try:
+def _getResult(root, *attri, ALL=False):  # get certain attribute from <result> ... </result>
+    resDict = {}
+    if ALL:
         att = ('source', 'pmid', 'pmcid', 'doi', 'title', 'authorString', 'abstractText')
-        res = []
-        root = ET.fromstring(xml_str)
-        for result in root.iter('result'):  # for each article
-            resDict = {}
-            for attri in att:  # for each attribute
-                for ele in result.findall(attri):
-                    pass
+    else:
+        att = attri
 
-        return res
-    except:
-        raise TypeError('Fail to load result list')
+    for ele in att:
+        attribute = _extractAttri(root, ele)
+
+        if len(attribute) == 0 and ele != 'pmcid':
+            resDict[ele] = 'None'
+        elif len(attribute) == 1:
+            resDict[ele] = attribute[0]
+        else:
+            resDict[ele] = attribute
+
+    return resDict
 
 
-def _printCore(resDict):
-    if len(resDict) == 0:
-        self.getAttribute(ALL=True)
-
-    # remove empty elements attri
-
+def _prettyCore(resDict):  # print result in format
+    # if len(resDict) == 0:
+    #     self.getAttribute(ALL=True)
+    # # remove empty elements attri
     # printList = ['title', 'doi', 'pmid', 'pmcid', 'source', 'authorString', 'abstractText']
-    p = _getValues('title', resDict) + ' (https://www.ncbi.nlm.nih.gov/pubmed/?term=%s) \n' % _getValues(
-        'pmid', resDict)
-    p += 'Author: %s \n' % _getValues('authorString', resDict)
-    p += 'DOI: %s \n' % _getValues('doi', resDict)
-    p += 'Source: %s \n' % _getValues('source', resDict)
-    p += 'PMID: %s \n' % _getValues('pmid', resDict)
+    p = '%(title)s (https://www.ncbi.nlm.nih.gov/pubmed/?term=%(pmid)s) \n' % resDict
+    p += 'Author: %(authorString)s \n' % resDict
+    p += 'DOI: %(doi)s \n' % resDict
+    p += 'Source: %(source)s \n' % resDict
+    p += 'PMID: %(pmid)s \n' % resDict
     if resDict.__contains__('pmcid') and len(resDict['pmcid']) != 0:
-        p += 'PMCID: %s \n' % _getValues('pmcid', resDict)
-    p += 'Abstract: %s \n' % _getValues('abstractText', resDict)
+        p += 'PMCID: %(pmcid)s \n' % resDict
+    p += 'Abstract: %(abstractText)s \n' % resDict
     return p
 
 
-def _getValues(attributeResult, dict):
-    values = '\n'.join(dict[attributeResult])
+def _getValues(attributeResult, dict):  # get values from result dict
+    values = 'None'
+    if dict.__contains__(attributeResult):
+        values = '\n'.join(dict[attributeResult])
+
     return values
 
 
-def _prettify(elem):
+def _prettyXML(elem):
     """Return a pretty-printed XML string for the Element."""
-    # rough_string = ET.tostring(elem, 'utf-8')
-    # reparsed = minidom.parseString(rough_string)
-    reparsed = minidom.parseString(elem)
+    if isinstance(elem, ET.Element):
+        rough_string = ET.tostring(elem, 'utf-8')
+        reparsed = minidom.parseString(rough_string)
+    elif isinstance(elem, str):
+        reparsed = minidom.parseString(elem)
+    else:
+        return
     return reparsed.toprettyxml(indent="\t")
 
 
 ex = CoreExtractor()
-res = ex.search('paracetamol')
-print(res)
+results = ex.search('paracetamol')
+
+for article in results:
+    print('-' * 200)
+    # print('{:<250s}'.format(_prettyCore(article)))
+    print(_prettyCore(article))
