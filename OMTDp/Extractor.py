@@ -4,6 +4,7 @@
 # Tag:
 # Description: search keyword return list from PMID
 
+import textwrap
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -128,4 +129,5 @@ results = ex.search('paracetamol')
 for article in results:
     print('-' * 200)
     # print('{:<250s}'.format(_prettyCore(article)))
-    print(_prettyCore(article))
+    print(textwrap.fill(_prettyCore(article), width=200, break_long_words=False, replace_whitespace=False))
+    # print(_prettyCore(article))
