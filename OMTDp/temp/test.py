@@ -4,13 +4,58 @@
 # Tag:
 # Description:
 
+import string
+
+stri = """1. information retrieval
+2. text mining in 10 documents
+3. retrieval models:
+    statistical language model 6
+    vector space model 11
+4. future development 18
+5. programming 100 questions
+6. data analysis
+"""
+
+lines = stri.split('\n')
+# print(lines)
+
+serial = []
+for line in lines:
+    translator = str.maketrans('', '', string.punctuation)
+    line = line.translate(translator)
+    if len(line) != 0:
+        value = line.split()[0]
+        if value.isdigit():
+            serial.append(str(int(value)))
+
+print(serial)
 
 
-l1 = [23]
-if len(l1) ==1:
-    print(l1[0])
-else:
-    print(l1)
+def spliter(stri, marks):
+    s = stri
+    res = []
+    for mark in marks:
+        res.append(s.split(mark)[0])
+
+        s = mark + s.split(mark)[1]
+    res.append(s)
+    return res
+
+
+result = spliter(stri, serial[1:-1])
+print(''.join(result))
+
+
+
+
+
+
+
+# l1 = [23]
+# if len(l1) ==1:
+#     print(l1[0])
+# else:
+#     print(l1)
 # import urllib.request
 # import xml.etree.ElementTree as ET
 #
